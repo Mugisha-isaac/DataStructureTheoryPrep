@@ -38,6 +38,28 @@ void insertAfterNode(struct Node * prev, int data){
     prev->next = newNode;
 }
 
+void searchNode(struct Node** head, int data){
+    bool flag = false;
+    struct Node* curr = *head;
+    while (curr != NULL)
+    {
+        if(curr->data == data){
+           flag = true;
+           break;
+        }
+        curr = curr->next;
+        flag=false;
+    }
+
+    if(flag == true){
+        cout<<data<<" Data is Found!"<<endl;
+    }
+    else{
+       cout<<data<<" Data is Not Found!"<<endl;
+    }
+    
+}
+
 
 int main(){
     struct Node* head = NULL;
@@ -45,5 +67,6 @@ int main(){
     insertAtBeginning(&head,1);
     insertAtBeginning(&head,0);
     insertAfterNode(head->next->next,10);
+    searchNode(&head,10);
     print(head);
 }
