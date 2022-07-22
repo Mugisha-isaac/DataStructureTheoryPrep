@@ -61,12 +61,42 @@ void searchNode(struct Node** head, int data){
 }
 
 
+void deleteNode(struct Node**head, int key){
+      struct Node* curr = *head,*prev;
+      if(curr!=NULL && curr->data == key){
+          *head = curr->next;
+          free(curr);
+          cout<<" Head is deleted"<<endl;
+      }
+      else{
+          while (curr!=NULL && curr->data != key)
+          {
+            prev = curr;
+            curr = curr->next;
+          }
+
+          if(curr==NULL){
+            return;
+          }
+          else{
+            prev->next = curr->next;
+            free(curr);
+            cout<<"Node Deleted Successfully"<<endl;
+          }
+          
+      }
+      
+      
+}
+
 int main(){
     struct Node* head = NULL;
     insertAtBeginning(&head,2);
     insertAtBeginning(&head,1);
     insertAtBeginning(&head,0);
     insertAfterNode(head->next->next,10);
-    searchNode(&head,10);
+    // searchNode(&head,10);
     print(head);
+    deleteNode(&head,2);
+     print(head);
 }
