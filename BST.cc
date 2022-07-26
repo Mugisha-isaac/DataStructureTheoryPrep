@@ -41,12 +41,57 @@ struct Node *insert(struct Node *node, int key){
 
 
 
+struct Node* minValueNode(struct Node* node){
+    struct Node* curr = node;
+    while(curr && curr->left !=NULL){
+        curr = curr->left;
+    }
+
+    return curr;
+}
+
+
+
+struct Node *deleteNode(struct Node* root,int key){
+    if(root==NULL) {
+        return NULL;
+    }
+    else if(key<root->val){
+        root->left = deleteNode(root->left, key);
+    }
+    else if(key>root->val){
+        root->right = deleteNode(root->right,key);
+    }
+    else{
+        if(root->left == NULL){
+            struct Node* temp = root->right;
+            free(root);
+            return temp;
+        }
+        else if(root->right == NULL){
+            struct Node* temp = root->left;
+            free(root);
+            return temp;
+        }
+        else{
+            struct Node* temp = minValueNode(root->right);
+            root->val  = temp->val;
+            root->right = deleteNode(root->right,temp->val);
+        }
+    }
+
+    return root;
+}
+
+
+
 int main(){
     struct Node *root = NULL;
 
     root = insert(root,8);
     root = insert(root,10);
     root = insert(root,12);
+    root = deleteNode(root,10);
 
     cout<<"Inorder traversal: "<<endl;
     inOrder(root);
